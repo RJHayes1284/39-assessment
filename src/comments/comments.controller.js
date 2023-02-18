@@ -17,9 +17,16 @@ async function list(req, res, next) {
 }
 
 async function listCommenterCount(req, res, next) {
-  // your solution here
-  res.json({ data: "" });
+  const data = await service.listCommenterCount()
+  const result = data.map((newData) => {
+    return {
+      commenter_email: newData.commenter_email,
+      count: Number(newData.count),
+    }
+  })
+  res.json({ data: result });
 }
+
 
 async function read(req, res, next) {
   const knexInstance = req.app.get("db");

@@ -5,7 +5,12 @@ function list() {
 }
 
 function listCommenterCount() {
-  // your solution here
+  return knex("comments as c")
+  .join("users as u", "u.user_id", "c.commenter_id")
+  .select("c.comment")
+  .count("c.comment")
+  .groupBy("u.user_email as commenter_email")
+  .orderBy("commenter_email")
 }
 
 function read(commentId) {
